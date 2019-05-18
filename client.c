@@ -6,27 +6,30 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-int main(){
-    int netsock;
-    netsock = socket(AF_INET, SOCK_STREAM, 0);
 
-    struct sockaddr_in server_address;
-    server_address.sin_family = AF_INET;
-    server_address.sin_port = htons(9002);
-    server_address.sin_addr.s_addr = INADDR_ANY;
+int main(int argc, char *argv[]) {
+	
+	int netSock;
+	netSock = socket(AF_INET, SOCK_STREAM,0);
 
-    int stat = connect(netsock, (struct sockaddr *) &server_address, sizeof(server_address));
+	struct sockaddr_in server_adress;
+	server_adress.sin_family = AF_INET;
+	server_adress.sin_port = htons(9002);
+	server_adress.sin_addr.s_addr = INADDR_ANY;
 
-    if(stat == -1)
-        printf("error");
+	int connectionStat = connect(netSock, (struct sockaddr *) &server_adress, sizeof(server_adress));
 
-    char respo[256];
+	if(connectionStat == -1)
+		printf("error\n");
+	
+	char response[256];
+	recv(netSock, &response, sizeof(response), 0);
 
-    recv(netsock, &respo, sizeof(respo), 0);
+	printf("Sent data: %s\n", response);
 
-    printf("Server: %s\n", respo);
+	close(netSock);
 
-    close(netsock);
+	return 0;
+}	
 
-    return 0;
-}
+		
