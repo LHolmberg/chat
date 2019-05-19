@@ -19,8 +19,8 @@ int main(int argc, char *argv[]) {
 
 	struct sockaddr_in server_adress;
 	server_adress.sin_family = AF_INET;
-	server_adress.sin_port = htons(9002);
-	server_adress.sin_addr.s_addr = INADDR_ANY;
+	server_adress.sin_port = 3002;
+	server_adress.sin_addr.s_addr = inet_addr("xxx.xxx.xx.xxx"); //xxx.xxx.xx.xxx = the other computers ip
 
 	int connectionStat = connect(netSock, (struct sockaddr *) &server_adress, sizeof(server_adress));
 	if(connectionStat == -1)
@@ -38,4 +38,4 @@ int main(int argc, char *argv[]) {
 	close(netSock);
 
 	return 0;
-}			
+}
