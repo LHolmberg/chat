@@ -6,7 +6,9 @@
 
 #include <fcntl.h>
 #include <unistd.h>
-int main(){
+
+
+int main(int argc, char *argv[]){
 
 	char msg[256];
 
@@ -24,9 +26,10 @@ int main(){
 
 	int client_socket; 
 	client_socket = accept(serSock, NULL,NULL);
-	scanf("%s", msg);
-
+	while(1){
+	scanf("%s", msg);	
 	send(client_socket, msg, sizeof(msg),0);
+	}
 
 	close(serSock);
 
