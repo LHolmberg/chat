@@ -26,8 +26,8 @@ int main(int argc, char *argv[]) {
 	if(connectionStat == -1)
 		printf("error\n");
 	
-	char response[256];
-	char msg[256];
+	char response[100];
+	char msg[100];
 	while(1) {
 
 	    recv(netSock, &response, sizeof(response), 0);
