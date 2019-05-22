@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
     bind(serSock, (struct sockaddr*) &server_adress, sizeof(server_adress));
     
     listen(serSock, 5);
-    char msg[256];
+    char msg[100];
     int client_socket;
     client_socket = accept(serSock, NULL,NULL);
     while(1){
