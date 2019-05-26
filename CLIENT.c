@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 	vars.serverSock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(3002);
-	inet_pton(AF_INET, "192.168.10.239", &server.sin_addr);
+	inet_pton(AF_INET, "xxx.xxx.xx.xxx", &server.sin_addr); //xxx.xxx.xx.xxx = YOUR COMPUTER IP
 	connect(vars.serverSock, (struct sockaddr *)&server, sizeof(server));
 
 	gtk_init(&argc, &argv);
