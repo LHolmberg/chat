@@ -32,8 +32,8 @@ int main(int argc, char *argv[]){
 	    if((pid = fork()) == 0) {
 	        while (recv(conn, message, 100, 0)>0) {
 	            printf("%s\n", message);
-							message[0] = '\0';
-							memset(&message[0], 0, sizeof(message));
+	 	    message[0] = '\0';
+	            memset(&message[0], 0, sizeof(message));
 	        }
 	        exit(0);
 
