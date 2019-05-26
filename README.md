@@ -1,3 +1,11 @@
 # chat-app-socket-gui
-A chat application with a graphical user interface written in C. It uses sockets to create a communication between the client/clients and the server.
+TO RUN:
+
+change the "xxx.xxx.xx.xxx" in client.c to your comp ip
+
+make server
+make client
+
+./server
+./client
 
