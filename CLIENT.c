@@ -13,8 +13,7 @@
 #include <gtk/gtk.h>
 
 struct gVars{
-	int fd;
-	int conn;
+	int serverSock;
 	char msg[100];
 	char dest[100];
 	char str[100];
@@ -31,7 +30,7 @@ void print(GtkEntry *entry, void *optional_data){
 			printf("YOU CAN NOT SEND AN EMPTY MESSAGE SIR!\n");
 	}
 	else{
-			send(vars.fd, vars.dest, strlen(vars.dest), 0);
+			send(vars.serverSock, vars.dest, strlen(vars.dest), 0);
 			gtk_entry_set_text (entry, "");
 	}
 }
@@ -43,13 +42,13 @@ int main(int argc, char *argv[]) {
 	scanf("%s", vars.username);
 	strcpy(vars.welcomeUsername, vars.username);
 	strcat(vars.username, ": ");
-	struct sockaddr_in serv;
+	struct sockaddr_in server;
 
-	vars.fd = socket(AF_INET, SOCK_STREAM, 0);
-	serv.sin_family = AF_INET;
-	serv.sin_port = htons(3002);
-	inet_pton(AF_INET, "xxx.xxx.xx.xxx", &serv.sin_addr); //xxx.xxx.... = comp ip
-	connect(vars.fd, (struct sockaddr *)&serv, sizeof(serv));
+	vars.serverSock = socket(AF_INET, SOCK_STREAM, 0);
+	server.sin_family = AF_INET;
+	server.sin_port = htons(3002);
+	inet_pton(AF_INET, "192.168.10.239", &server.sin_addr);
+	connect(vars.serverSock, (struct sockaddr *)&server, sizeof(server));
 
 	gtk_init(&argc, &argv);
 	GtkWidget *window, *entry, *grid, *instrLabel, *welcomeLabel;
