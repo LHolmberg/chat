@@ -10,30 +10,28 @@
 
 #define maxlength 100
 
-
-
 int main(int argc, char *argv[]){
 
-	struct sockaddr_in serv;
-	int fd;
-	int conn;
-	char message[100];
+	struct sockaddr_in server;
+	int client;
+	int connection;
+	char msg[maxlength];
 
-	serv.sin_family = AF_INET;
-	serv.sin_port = htons(3002);
-	serv.sin_addr.s_addr = INADDR_ANY;
-	fd = socket(AF_INET, SOCK_STREAM, 0);
+	server.sin_family = AF_INET;
+	server.sin_port = htons(3002);
+	server.sin_addr.s_addr = INADDR_ANY;
+	client = socket(AF_INET, SOCK_STREAM, 0);
 
-	bind(fd, (struct sockaddr *)&serv, sizeof(serv));
-	listen(fd,5);
+	bind(client, (struct sockaddr *)&server, sizeof(server));
+	listen(client, 5);
 
-	while(conn = accept(fd, (struct sockaddr *)NULL, NULL)) {
-	    int pid;
-	    if((pid = fork()) == 0) {
-	        while (recv(conn, message, 100, 0)>0) {
-	            printf("%s\n", message);
-	 	    message[0] = '\0';
-	            memset(&message[0], 0, sizeof(message));
+	while(connection = accept(client, (struct sockaddr *)NULL, NULL)) {
+	    int i;
+	    if((i = fork()) == 0) {
+	        while (recv(connection, msg, 100, 0)>0) {
+	            printf("%s\n", msg);
+	 	    msg[0] = '\0';
+	            memset(&msg[0], 0, sizeof(msg));
 	        }
 	        exit(0);
 
