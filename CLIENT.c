@@ -23,16 +23,22 @@ struct gVars{
 	char welcomeUsername[10];
 }vars;
 
-
 void print(GtkEntry *entry, void *optional_data){
 	strcpy (vars.msg, gtk_entry_get_text(GTK_ENTRY(entry)));
 	strcpy(vars.dest, vars.username);
 	strcat(vars.dest, vars.msg);
-	send(vars.fd, vars.dest, strlen(vars.dest), 0);
-	gtk_entry_set_text (entry, "");
+	if(strlen(vars.dest) <= strlen(vars.username)){
+			printf("YOU CAN NOT SEND AN EMPTY MESSAGE SIR!\n");
+	}
+	else{
+			send(vars.fd, vars.dest, strlen(vars.dest), 0);
+			gtk_entry_set_text (entry, "");
+	}
 }
 
+
 int main(int argc, char *argv[]) {
+
 	printf("Enter a username, sir: ");
 	scanf("%s", vars.username);
 	strcpy(vars.welcomeUsername, vars.username);
@@ -42,7 +48,7 @@ int main(int argc, char *argv[]) {
 	vars.fd = socket(AF_INET, SOCK_STREAM, 0);
 	serv.sin_family = AF_INET;
 	serv.sin_port = htons(3002);
-	inet_pton(AF_INET, "192.168.10.239", &serv.sin_addr);
+	inet_pton(AF_INET, "192.168.10.247", &serv.sin_addr);
 	connect(vars.fd, (struct sockaddr *)&serv, sizeof(serv));
 
 	gtk_init(&argc, &argv);
@@ -68,7 +74,7 @@ int main(int argc, char *argv[]) {
 	gtk_grid_attach(GTK_GRID(grid), welcomeLabel, 0, 0, 1, 1);
 
 	gtk_widget_show_all(window);
-	gtk_window_set_default_size(GTK_WINDOW(window), 400, 100);
+	gtk_window_set_default_size(GTK_WINDOW(window), 500, 150);
 	gtk_window_set_resizable (GTK_WINDOW(window), FALSE);
 
 	gtk_main();
