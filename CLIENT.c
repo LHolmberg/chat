@@ -13,7 +13,7 @@
 #include <gtk/gtk.h>
 #include <pthread.h>
 
-struct gVars{
+typedef struct gVars{
 	int serverSock;
 	char msg[100];
 	char dest[100];
@@ -22,7 +22,8 @@ struct gVars{
 	char welcomeStorage[20];
 	char welcomeUsername[10];
 	GtkWidget *window, *entry, *grid, *instrLabel, *welcomeLabel;
-}gv;
+}gVars;
+struct gVars gv;
 
 void print(GtkEntry *entry, void *optional_data){
 	strcpy(gv.msg, gtk_entry_get_text(GTK_ENTRY(entry)));
@@ -49,7 +50,7 @@ int main(int argc, char *argv[]) {
 	gv.serverSock = socket(AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(3002);
-	inet_pton(AF_INET, "xxx.xxx.x.xxx", &server.sin_addr); // xxx.xxx.x.xxx = your computers ip
+	inet_pton(AF_INET, "192.168.1.143", &server.sin_addr); // xxx.xxx.x.xxx = your computers ip
 	connect(gv.serverSock, (struct sockaddr *)&server, sizeof(server));
 
 	gtk_init(&argc, &argv);
@@ -59,7 +60,7 @@ int main(int argc, char *argv[]) {
 	gtk_window_set_title (GTK_WINDOW (gv.window), gv.welcomeUsername);
 
 	gv.grid = gtk_grid_new();
-    gtk_container_add(GTK_CONTAINER(gv.window), gv.grid);
+    	gtk_container_add(GTK_CONTAINER(gv.window), gv.grid);
 
 	gv.entry = gtk_entry_new();
 	g_signal_connect(gv.entry, "activate", G_CALLBACK(print), NULL);
