@@ -19,7 +19,7 @@ typedef struct sock{
 	struct sockaddr_in server;
 	pthread_t thread1, thread2;
 	int i1,i2;
-  GtkWidget *window, *label;
+  	GtkWidget *window, *label;
 }sock;
 struct sock so;
 
